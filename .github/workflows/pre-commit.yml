@@ -3,11 +3,16 @@ name: pre-commit
 on:
   push:
     branches: [main]
-
 jobs:
-  pre-commit:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-      - uses: pre-commit/action@v3.0.0
+      - uses: actions/checkout@v2
+      - run: yarn install
+      - run: yarn start
+      - run: yarn build
+      - run: yarn test
+      - run: yarn lint
+      - run: yarn lint:fix
+      - run: yarn prettier

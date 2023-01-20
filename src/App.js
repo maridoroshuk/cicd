@@ -18,6 +18,8 @@ function App() {
           Learn React
         </a>
   <p>paragraph</p>
+  <p>paragraph</p>
+  <p>paragraph</p>
       </header>
     </div>
   );
