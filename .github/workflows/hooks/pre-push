@@ -1,0 +1,6 @@
+#!/bin/sh
+# Exit immediately if any command fails
+set -e
+
+# Run ESLint checker on all files
+npm run lint
