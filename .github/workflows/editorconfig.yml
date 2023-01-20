@@ -1,4 +1,4 @@
-name: EditorConfig
+name: ESlint
 
 on:
   push:
@@ -6,27 +6,12 @@ on:
       - main
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16
-      - id: files
-        uses: Ana06/get-changed-files@v1.2
-      - name: Проверка линтером
-        run: |
-          npm install editorconfig-checker --global
-          config=.editorconfig
-          for changed_file in ${{ steps.files.outputs.all }}; do
-            if [ $changed_file == $config ]
-            then
-              echo "Проверка для всех файлов"
-              editorconfig-checker
-              break
-            else
-              echo "Проверка для ${changed_file}"
-              editorconfig-checker ${changed_file}
-            fi
-          done
+    - uses: actions/checkout@v2
+    - run: yarn install
+    - name: Run ESLint on all files
+      run: yarn lint
+    - name: Run ESLint on changed files
+      run: yarn lint --fix $(git diff --name-only HEAD~1 HEAD | grep '\.js$\|\.jsx$\|\.ts$\|\.tsx$')
